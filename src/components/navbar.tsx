@@ -1,7 +1,7 @@
 import { Dices } from "lucide-react"
 import { Button } from "./ui/button"
 import Link from "next/link"
-import { SignOutButton, UserButton } from "@clerk/nextjs"
+import { UserButton } from "@clerk/nextjs"
 import { currentUser } from "@clerk/nextjs/server"
 
 

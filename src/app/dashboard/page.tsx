@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResponsiveModal, ResponsiveModalContent, ResponsiveModalFooter, ResponsiveModalHeader, ResponsiveModalTitle, ResponsiveModalTrigger } from "@/components/ui/responsive-model";
 import { Separator } from "@/components/ui/separator";
-import { Play, Plus } from "lucide-react";
+import {  Plus } from "lucide-react";
 
 export default async function Page() {
   return (
@@ -35,7 +35,7 @@ export default async function Page() {
                 <Input placeholder="Enter custom amount" className="h-10 mt-2" />
               </div>
               <p className="text-sm text-gray-500 mt-2 mb-3">
-                This amount will be deducted from your wallet and you'll receive your winnings after your win gets verified.
+                This amount will be deducted from your wallet and you&apos;ll receive your winnings after your win gets verified.
               </p>
             </div>
             <ResponsiveModalFooter>

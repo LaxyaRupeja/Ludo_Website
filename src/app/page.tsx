@@ -8,7 +8,7 @@ export default async function Home() {
       <main className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-8 md:mb-0">
-            <h1 className="text-2xl sm:text-5xl font-bold mb-4">Play Ludo, Win Real Cash!</h1>
+            <h1 className="text-2xl sm:text-5xl font-bold mb-4">Play Ludo&nbsp;Win Real Cash!</h1>
             <p className="text-base sm:text-xl mb-8 text-balance">Join thousands of players in exciting Ludo matches and compete for cash prizes. Sign up now and get a welcome bonus!</p>
             <Link href="/sign-in"><Button size={"lg"}>
               Start Playing Now
