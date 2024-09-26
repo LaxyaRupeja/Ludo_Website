@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResponsiveModal, ResponsiveModalContent, ResponsiveModalFooter, ResponsiveModalHeader, ResponsiveModalTitle, ResponsiveModalTrigger } from "@/components/ui/responsive-model";
 import { Separator } from "@/components/ui/separator";
-import {  Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 
 export default async function Page() {
   return (
@@ -16,7 +16,7 @@ export default async function Page() {
               <Plus />
             </Button>
           </ResponsiveModalTrigger>
-          <ResponsiveModalContent>
+          <ResponsiveModalContent className="bg-black">
             <ResponsiveModalHeader>
               <ResponsiveModalTitle>Create a new game</ResponsiveModalTitle>
             </ResponsiveModalHeader>
