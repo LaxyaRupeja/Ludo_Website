@@ -1,13 +1,18 @@
-import { Dices } from "lucide-react"
+import { Dices, IndianRupee } from "lucide-react"
 import { Button } from "./ui/button"
 import Link from "next/link"
 import { UserButton } from "@clerk/nextjs"
 import { currentUser } from "@clerk/nextjs/server"
+import { checkAndCreateUser } from "@/lib/check-and-create-user"
+import { usePathname } from "next/navigation"
+import { LoggedInUser } from "./navbar/logged-in-user"
 
 
 export const Navbar = async () => {
 
     const user = await currentUser();
+
+    const userWallet = await checkAndCreateUser();
 
 
 
@@ -15,15 +20,18 @@ export const Navbar = async () => {
         <Link href="/"><Dices size={32} /></Link>
         {
             user ? (
-                <div className="flex items-center gap-2">
-                    <UserButton />
-                    <Link href="/dashboard"><Button size={"sm"}>Dashboard</Button></Link>
-                </div>
+                <LoggedInUser walletAmount={userWallet?.walletAmount ?? 0} />
             ) : (
-                <Link href="/sign-in"><Button className="">
-                    Login
-                </Button></Link>
+                <LoggedOutUser />
             )
         }
     </nav>
+}
+
+
+
+const LoggedOutUser = () => {
+    return <Link href="/sign-in"><Button className="">
+        Login
+    </Button></Link>
 }

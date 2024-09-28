@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
-import { TRPCProvider } from "@/trpc/client";
 import {
   ClerkProvider
 } from "@clerk/nextjs";
@@ -36,27 +35,25 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <TRPCProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              forcedTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
-                <div className="h-full rounded-md">
-                  <Navbar />
-                  <div className="p-3">
-                    {
-                      children
-                    }
-                  </div>
-
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            forcedTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
+              <div className="h-full rounded-md">
+                <Navbar />
+                <div className="p-3">
+                  {
+                    children
+                  }
                 </div>
-              </main>
-            </ThemeProvider>
-          </TRPCProvider>
+
+              </div>
+            </main>
+          </ThemeProvider>
         </body>
       </html >
     </ClerkProvider>

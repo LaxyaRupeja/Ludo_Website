@@ -9,15 +9,68 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model Todo {
-  id        String   @id @default(cuid())
-  title     String
-  done      Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id           String        @id @default(cuid())
+  phone        String        @unique
+  email        String?       @unique
+  clerkId      String?       @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  wallet       Wallet?
+  transactions Transaction[]
+  createdGames Game[]        @relation("CreatedGames")
+  joinedGames  Game[]        @relation("JoinedGames")
+  wonGames     Game[]        @relation("WonGames")
+  walletId     String? // Make sure this is optional
+}
+
+model Wallet {
+  id      String @id @default(cuid())
+  userId  String @unique
+  balance Int    @default(0)
+  user    User   @relation(fields: [userId], references: [id]) // Add fields and references
+}
+
+model Transaction {
+  id        String          @id @default(cuid())
+  userId    String
+  amount    Int
+  type      TransactionType
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  user      User            @relation(fields: [userId], references: [id])
+}
+
+// A Game Model should contain both player id bet amount and expire time which should default to 10 min 
+
+model Game {
+  id        String     @id @default(uuid())
+  creatorId String
+  joinerId  String?
+  status    GameStatus @default(PENDING)
+  betAmount Int
+  createdAt DateTime   @default(now())
+  expiresAt DateTime   @default(dbgenerated("NOW() + INTERVAL '10 minutes'"))
+  winnerId  String?
+  creator   User       @relation("CreatedGames", fields: [creatorId], references: [id])
+  joiner    User?      @relation("JoinedGames", fields: [joinerId], references: [id])
+  winner    User?      @relation("WonGames", fields: [winnerId], references: [id])
+}
+
+enum GameStatus {
+  PENDING
+  ACTIVE
+  EXPIRED
+  COMPLETED
+  CANCELED
+}
+
+enum TransactionType {
+  DEBIT
+  CREDIT
 }

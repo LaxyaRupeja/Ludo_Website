@@ -32,7 +32,7 @@ export default async function Page() {
                     ))}
                   </div>
                 </div>
-                <Input placeholder="Enter custom amount" className="h-10 mt-2" />
+                <Input type="number" placeholder="Enter custom amount" className="h-10 mt-2" />
               </div>
               <p className="text-sm text-gray-500 mt-2 mb-3">
                 This amount will be deducted from your wallet and you&apos;ll receive your winnings after your win gets verified.
