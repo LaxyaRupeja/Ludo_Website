@@ -4,7 +4,7 @@ import { ResponsiveModal, ResponsiveModalContent, ResponsiveModalFooter, Respons
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 
-export default async function Page() {
+export default function Page() {
   return (
     <div>
       <h1 className="text-xl sm:text-3xl font-bold text-center mt-5">Play Ludo and Earn Money</h1>
