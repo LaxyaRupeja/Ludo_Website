@@ -1,10 +1,8 @@
-import { Dices, IndianRupee } from "lucide-react"
+import { Dices } from "lucide-react"
 import { Button } from "./ui/button"
 import Link from "next/link"
-import { UserButton } from "@clerk/nextjs"
 import { currentUser } from "@clerk/nextjs/server"
 import { checkAndCreateUser } from "@/lib/check-and-create-user"
-import { usePathname } from "next/navigation"
 import { LoggedInUser } from "./navbar/logged-in-user"
 
 
