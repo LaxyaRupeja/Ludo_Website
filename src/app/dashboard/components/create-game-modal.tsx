@@ -105,7 +105,7 @@ const CreateGameModal = ({
                             />
                         </div>
                         <p className="text-sm text-gray-500">
-                            This amount will be deducted from your wallet and you'll receive your winnings after your win gets verified.
+                            This amount will be deducted from your wallet and you&apos;ll receive your winnings after your win gets verified.
                         </p>
                     </div>
                     <ResponsiveModalFooter>
