@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ResponsiveModal, ResponsiveModalClose, ResponsiveModalContent, ResponsiveModalDescription, ResponsiveModalFooter, ResponsiveModalHeader, ResponsiveModalTitle, ResponsiveModalTrigger } from "@/components/ui/responsive-model";
 import { Separator } from "@/components/ui/separator";
+import prisma from "@/helpers/db";
+import { currentUser } from "@clerk/nextjs/server";
 import { IndianRupee } from "lucide-react";
 
 const transactions = [
@@ -29,9 +31,26 @@ const transactions = [
     },
 ];
 
-const WalletPage = () => {
+const WalletPage = async () => {
+
+    const user = await currentUser();
+
+    const dbUser = await prisma.user.findUnique({
+        where: {
+            clerkId: user?.id
+        }
+    })
+
+    const wallet = await prisma.wallet.findUnique({
+        where: {
+            userId: dbUser?.id
+        }
+    })
+
+
+
     return <div>
-        <Card>
+        < Card >
             <CardHeader>
                 <CardTitle>Wallet</CardTitle>
             </CardHeader>
@@ -40,11 +59,11 @@ const WalletPage = () => {
                     <span className="text-lg font-medium">Total Balance</span>
                     <span className="flex items-center gap-2 text-3xl font-bold">
                         <IndianRupee size={30} />
-                        1000
+                        {wallet?.balance}
                     </span>
                 </div>
             </CardContent>
-        </Card>
+        </Card >
         <Separator className="my-5" />
         <div className="flex justify-between items-center gap-2">
             <ResponsiveModal>
@@ -91,7 +110,7 @@ const WalletPage = () => {
                         </p>
                         <Input type="number" placeholder="Enter amount" className="h-14" />
                         <p className="text-sm text-gray-500 mt-2">
-                            Your current balance is ₹1000
+                            Your current balance is ₹{wallet?.balance}
                         </p>
                     </div>
                     <Separator className="my-5" />
@@ -121,7 +140,7 @@ const WalletPage = () => {
         <div className="mt-5">
             <Button variant={"outline"}>Cancel</Button>
         </div>
-    </div>
+    </div >
 }
 
 export default WalletPage;

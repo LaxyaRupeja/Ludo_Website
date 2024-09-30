@@ -3,46 +3,14 @@ import { Input } from "@/components/ui/input";
 import { ResponsiveModal, ResponsiveModalContent, ResponsiveModalFooter, ResponsiveModalHeader, ResponsiveModalTitle, ResponsiveModalTrigger } from "@/components/ui/responsive-model";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
+import CreateGameModal from "./create-game-modal";
 
 export default function Page() {
   return (
     <div>
       <h1 className="text-xl sm:text-3xl font-bold text-center mt-5">Play Ludo and Earn Money</h1>
       <div className="flex justify-center items-center px-3 mt-5">
-        <Input placeholder="Enter Your Room Code to List Your Game" className="h-14" />
-        <ResponsiveModal>
-          <ResponsiveModalTrigger asChild>
-            <Button className="ml-3 h-14" variant={"outline"} >
-              <Plus />
-            </Button>
-          </ResponsiveModalTrigger>
-          <ResponsiveModalContent className="bg-black">
-            <ResponsiveModalHeader>
-              <ResponsiveModalTitle>Create a new game</ResponsiveModalTitle>
-            </ResponsiveModalHeader>
-            <div>
-              <h2 className="text-lg font-semibold mt-4">Select Bet Amount</h2>
-              <div className="flex flex-col mt-2">
-                <div className="flex space-x-2">
-                  <div className="flex flex-wrap gap-2">
-                    {["100", "200", "300", "500", "1000", "2000", "5000", "10000", "20000", "50000", "100000", "200000"].map((amount) => (
-                      <Button key={amount} className="h-10" variant="outline">
-                        {amount} Rs
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-                <Input type="number" placeholder="Enter custom amount" className="h-10 mt-2" />
-              </div>
-              <p className="text-sm text-gray-500 mt-2 mb-3">
-                This amount will be deducted from your wallet and you&apos;ll receive your winnings after your win gets verified.
-              </p>
-            </div>
-            <ResponsiveModalFooter>
-              <Button>Create Game</Button>
-            </ResponsiveModalFooter>
-          </ResponsiveModalContent>
-        </ResponsiveModal>
+        <CreateGameModal />
       </div>
       <Separator className="my-5" />
       <div>
@@ -85,3 +53,4 @@ export default function Page() {
     </div>
   )
 }
+
