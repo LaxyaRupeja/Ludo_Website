@@ -1,8 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ResponsiveModal, ResponsiveModalContent, ResponsiveModalFooter, ResponsiveModalHeader, ResponsiveModalTitle, ResponsiveModalTrigger } from "@/components/ui/responsive-model";
 import { Separator } from "@/components/ui/separator";
-import { Plus } from "lucide-react";
 import CreateGameModal from "./create-game-modal";
 
 export default function Page() {
