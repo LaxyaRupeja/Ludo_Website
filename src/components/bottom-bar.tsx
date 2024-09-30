@@ -1,3 +1,4 @@
+import CreateGameModal from "@/app/dashboard/components/create-game-modal";
 import { Dices, History, IndianRupee, User } from "lucide-react";
 import Link from "next/link";
 
@@ -9,13 +10,12 @@ const BottomBar = () => {
                 <span className="text-sm font-medium">Home</span>
             </div>
             </Link>
-            <Link href="/dashboard/wallet"><div className="flex flex-col items-center gap-1 hover:text-green-300">
+            <Link href="/dashboard/wallet"><div className="flex flex-col items-center gap-1 hover:text-green-300 mr-8">
                 <IndianRupee size={26} />
                 <span className="text-sm font-medium">Wallet</span>
             </div>
             </Link>
-            <div className="flex flex-col items-center gap-1 hover:text-green-300">
-
+            <div className="flex flex-col items-center gap-1 hover:text-green-300 ml-8">
                 <History size={26} />
                 <span className="text-sm font-medium">History</span>
             </div>
@@ -25,6 +25,7 @@ const BottomBar = () => {
             </div>
             </Link>
         </div>
+        <CreateGameModal className="absolute bottom-5 right-[44.2%] rounded-full bg-green-600 hover:bg-green-600/75 border" />
     </div>
 }
 

@@ -23,9 +23,9 @@ export const LoggedInUser = ({
             <Link href="/dashboard"><Button size={"sm"}>Dashboard</Button></Link>
 
         }
-        <span className="text-sm font-medium flex items-center gap-1 border p-2 rounded-lg border-green-300 text-green-300">
+        <Link href="/dashboard/wallet"><span className="text-sm font-medium flex items-center gap-1 border p-2 rounded-lg border-green-300 text-green-300">
             <IndianRupee size={16} />
-            {walletAmount}</span>
+            {walletAmount}</span></Link>
 
     </div>
 }

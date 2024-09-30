@@ -3,10 +3,13 @@
 import { auth } from "@clerk/nextjs/server";
 import prisma from "../helpers/db";
 import { createGameSchema, TCreateGame } from "@/validators/game";
+import { revalidatePath } from "next/cache";
 
 
 // Create a Game
 export const createGame = async (data: TCreateGame) => {
+
+    console.log("Creating Game", data);
 
     const gameData = createGameSchema.safeParse(data);
 
@@ -62,6 +65,8 @@ export const createGame = async (data: TCreateGame) => {
             code: code,
         }
     })
+
+    revalidatePath("/dashboard");
 
     return game;
 
