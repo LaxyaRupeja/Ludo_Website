@@ -18,7 +18,11 @@ export const createGame = async (data: TCreateGame) => {
             path: issue.path.join('.'),
             message: issue.message
         }));
-        throw new Error(JSON.stringify(errors));
+        return {
+            success: false,
+            error: "Validation failed",
+            errors: errors
+        }
     }
 
     const { betAmount, code } = gameData.data;
@@ -30,7 +34,10 @@ export const createGame = async (data: TCreateGame) => {
     const user = auth();
 
     if (!user.userId) {
-        throw new Error("User not found");
+        return {
+            success: false,
+            error: "User not found"
+        }
     }
 
     const dbUser = await prisma.user.findUnique({
@@ -40,23 +47,44 @@ export const createGame = async (data: TCreateGame) => {
     })
 
     if (!dbUser) {
-        throw new Error("User not found");
+        return {
+            success: false,
+            error: "User not found"
+        }
     }
 
-    const wallet = await prisma.wallet.findUnique({
+    let wallet = await prisma.wallet.findUnique({
         where: {
             userId: dbUser.id
         }
     })
 
     if (!wallet) {
-        await prisma.wallet.create({
+        wallet = await prisma.wallet.create({
             data: {
                 userId: dbUser.id,
                 balance: 0
             }
         })
     }
+
+    if ((wallet?.balance ?? 0) < betAmount) {
+        return {
+            success: false,
+            error: "Insufficient balance"
+        }
+    }
+
+    const deductAmount = wallet.balance - betAmount;
+
+    await prisma.wallet.update({
+        where: {
+            id: wallet.id
+        },
+        data: {
+            balance: deductAmount
+        }
+    })
 
     const game = await prisma.game.create({
         data: {
@@ -68,6 +96,108 @@ export const createGame = async (data: TCreateGame) => {
 
     revalidatePath("/dashboard");
 
-    return game;
+    return {
+        success: true,
+        game: game
+    };
 
 };
+
+
+// Join a Game
+
+export const joinGame = async (gameId: string) => {
+
+    const user = auth();
+
+    if (!user.userId) {
+        return {
+            success: false,
+            error: "User not found"
+        }
+    }
+
+    const dbUser = await prisma.user.findUnique({
+        where: {
+            clerkId: user.userId
+        }
+    })
+
+    if (!dbUser) {
+        return {
+            success: false,
+            error: "User not found"
+        }
+    }
+
+    const game = await prisma.game.findUnique({
+        where: {
+            id: gameId
+        }
+    })
+
+    if (!game) {
+        return {
+            success: false,
+            error: "Game not found"
+        }
+    }
+
+    if (game.joinerId) {
+        return {
+            success: false,
+            error: "Game already joined"
+        }
+    }
+
+    const wallet = await prisma.wallet.findUnique({
+        where: {
+            userId: dbUser.id
+        }
+    })
+
+    if (!wallet) {
+        return {
+            success: false,
+            error: "Wallet not found"
+        }
+    }
+
+    if ((wallet?.balance ?? 0) < game.betAmount) {
+        return {
+            success: false,
+            error: "Insufficient balance"
+        }
+    }
+
+    const deductAmount = wallet.balance - game.betAmount;
+
+    await prisma.$transaction([
+        prisma.wallet.update({
+            where: {
+                id: wallet.id
+            },
+            data: {
+                balance: deductAmount
+            }
+        }),
+        prisma.game.update({
+            where: {
+                id: game.id
+            },
+            data: {
+                joinerId: dbUser.id,
+                status: "ACTIVE"
+            }
+        })
+    ])
+
+    revalidatePath("/dashboard");
+
+    return {
+        success: true,
+        game: game
+    }
+
+}
+

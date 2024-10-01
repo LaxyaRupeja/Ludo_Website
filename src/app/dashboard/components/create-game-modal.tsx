@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { ResponsiveModal, ResponsiveModalContent, ResponsiveModalFooter, Respons
 import { Plus } from "lucide-react";
 import { createGame } from '@/actions/game';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 const CreateGameModal = ({
     className
@@ -23,18 +24,28 @@ const CreateGameModal = ({
         }
     });
 
+    const [open, setOpen] = useState(false);
+
     const onSubmit = async (data: {
         code: string;
         betAmount: string;
     }) => {
         console.log("Creating Client Game", data);
         try {
-            await createGame({
+            const response = await createGame({
                 code: data.code,
                 betAmount: Number(data.betAmount)
             });
             // Handle successful game creation (e.g., show a success message, close the modal)
-            console.log("Game created successfully");
+
+            if (response.success) {
+                console.log("Game created successfully");
+                toast.success("Game created successfully");
+                setOpen(false);
+            } else {
+                console.log("Failed to create game:", response.error);
+                toast.error(response.error);
+            }
 
         } catch (error) {
             // Handle error (e.g., show an error message)
@@ -45,7 +56,11 @@ const CreateGameModal = ({
     const predefinedAmounts = ["100", "200", "300", "500", "1000", "2000", "5000", "10000", "20000", "50000", "100000", "200000"];
 
     return (
-        <ResponsiveModal>c
+        <ResponsiveModal onOpenChange={
+            (open) => {
+                setOpen(open);
+            }
+        } open={open}>
             <ResponsiveModalTrigger asChild>
                 <Button className={cn("h-14", className)} variant="outline" >
                     <Plus />
@@ -55,7 +70,7 @@ const CreateGameModal = ({
                 <ResponsiveModalHeader>
                     <ResponsiveModalTitle>Create a new game</ResponsiveModalTitle>
                 </ResponsiveModalHeader>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-5">
                     <div className="space-y-4">
                         <Controller
                             name="code"

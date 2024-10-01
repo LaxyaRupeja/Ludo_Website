@@ -1,74 +1,20 @@
-import prisma from "@/helpers/db";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Game } from "@prisma/client";
+import { JoinButton } from "./join-button-game";
 
-const YourGames = async () => {
-
-    const {
-        userId
-    } = auth();
-
-    if (!userId) {
-        redirect("/sign-in")
-    }
-
-    const user = await prisma.user.findUnique({
-        where: {
-            clerkId: userId
-        }
-    });
-
-    const games = await prisma.game.findMany({
-        where: {
-            OR: [
-                {
-                    creatorId: user?.id
-                },
-                {
-                    joinerId: user?.id
-                }
-            ]
-        }
-    })
-
-    return (
-        <div>
-            {
-                games.length == 0 ? (
-                    <div className="flex justify-center items-center h-full">
-                        <h1 className="text-xl font-semibold text-green-600">No games found</h1>
-                    </div>
-                ) : (
-                    <div className="flex flex-col gap-4">
-                        {
-                            games.map((game) => (
-                                <GameCard key={game.id} game={
-                                    game
-                                } />
-                            ))
-                        }
-                    </div>
-                )
-            }
-        </div>
-    )
-}
-
-export default YourGames;
-
-
-
-
-
-const GameCard = (
+export const GameCard = (
     {
-        game
+        game,
+        userId
     }: {
-        game: Game
+        game: Game,
+        userId: string
     }
 ) => {
+
+
+
 
     return (
         <div key={game.id} className="border p-4 rounded-md">
@@ -79,6 +25,17 @@ const GameCard = (
                         game.betAmount
                     }</span></p>
                 </div>
+                {
+                    game.joinerId == userId ? (
+                        <Button disabled>Joined</Button>
+                    ) :
+                        game.creatorId == userId ? (
+                            <Button disabled>You created this game</Button>
+                        ) : (
+
+                            <JoinButton game={game} />
+                        )
+                }
             </div>
             <Separator className="my-4" />
             <div className="flex justify-between items-center w-full">

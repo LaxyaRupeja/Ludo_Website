@@ -7,7 +7,9 @@ const DashboardLayout = ({
 }) => {
     return <div>
         <BottomBar />
-        {children}
+        <div className="pb-20">
+            {children}
+        </div>
     </div>
 }
 

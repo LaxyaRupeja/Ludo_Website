@@ -7,6 +7,7 @@ import {
   ClerkProvider
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -57,6 +58,7 @@ export default function RootLayout({
                 </div>
 
               </div>
+              <Toaster position="top-right" />
             </main>
           </ThemeProvider>
         </body>
