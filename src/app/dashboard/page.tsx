@@ -16,7 +16,7 @@ export default function Page({
   console.log(searchParams);
 
   return (
-    <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mx-auto">
       <Card className="bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg mb-8">
         <CardContent className="p-6">
           <div className="flex items-center justify-center space-x-4">
