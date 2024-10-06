@@ -9,7 +9,6 @@ import { format } from "date-fns";
 import { Clock, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import WalletFilter from "./components/wallet-filter";
 import { Badge } from "@/components/ui/badge";
-import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 
 const WalletPage = async ({
     searchParams
