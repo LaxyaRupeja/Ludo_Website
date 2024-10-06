@@ -5,31 +5,35 @@ import { currentUser } from "@clerk/nextjs/server"
 import { checkAndCreateUser } from "@/lib/check-and-create-user"
 import { LoggedInUser } from "./navbar/logged-in-user"
 
-
 export const Navbar = async () => {
-
     const user = await currentUser();
-
     const userWallet = await checkAndCreateUser();
 
-
-
-    return <nav className="flex max-h-[69px] min-h-[69px] p-3  min-w-max border-b items-center justify-between sm:px-44 px-10">
-        <Link href="/"><Dices size={32} /></Link>
-        {
-            user ? (
-                <LoggedInUser walletAmount={userWallet?.walletAmount ?? 0} />
-            ) : (
-                <LoggedOutUser />
-            )
-        }
-    </nav>
+    return (
+        <nav className="fixed top-0 w-full bg-gradient-to-br from-gray-800 to-gray-900 text-white border-b border-gray-700 shadow-lg">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-16">
+                    <Link href="/" className="flex items-center">
+                        <Dices size={32} className="text-green-400 mr-2" />
+                        <span className="text-xl font-bold">LudoVerse</span>
+                    </Link>
+                    {user ? (
+                        <LoggedInUser walletAmount={userWallet?.walletAmount ?? 0} />
+                    ) : (
+                        <LoggedOutUser />
+                    )}
+                </div>
+            </div>
+        </nav>
+    )
 }
 
-
-
 const LoggedOutUser = () => {
-    return <Link href="/sign-in"><Button className="">
-        Login
-    </Button></Link>
+    return (
+        <Link href="/sign-in">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition duration-300">
+                Login
+            </Button>
+        </Link>
+    )
 }

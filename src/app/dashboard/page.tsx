@@ -2,6 +2,8 @@ import { Separator } from "@/components/ui/separator";
 import GameFilter from "./components/game-filter";
 import AllGames from "./components/all-games";
 import YourGames from "./components/your-game";
+import { Card, CardContent } from "@/components/ui/card";
+import { Dices } from "lucide-react";
 
 export default function Page({
   searchParams
@@ -13,21 +15,27 @@ export default function Page({
 
   console.log(searchParams);
 
-
   return (
-    <div>
-      <h1 className="text-xl sm:text-3xl font-bold text-center mt-5">Play Ludo and Earn Money</h1>
-      <Separator className="my-5" />
-      <div>
+    <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Card className="bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg mb-8">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-center space-x-4">
+            <Dices size={40} className="text-green-400" />
+            <h1 className="text-2xl sm:text-3xl font-bold">Play Ludo and Earn Money</h1>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="">
         <GameFilter />
-        <Separator className="my-5 mt-0" />
-        {
-          searchParams.filter == "all" ? (
+        <Separator className="my-6 bg-gray-700" />
+        <div className="mt-6">
+          {searchParams.filter == "all" ? (
             <AllGames />
           ) : (
             <YourGames />
-          )
-        }
+          )}
+        </div>
       </div>
     </div>
   )

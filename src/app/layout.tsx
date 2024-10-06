@@ -8,6 +8,7 @@ import {
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Toaster } from "@/components/ui/sonner";
+import Script from "next/script";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -61,6 +62,10 @@ export default function RootLayout({
               <Toaster position="top-right" />
             </main>
           </ThemeProvider>
+          <Script
+            id="razorpay-checkout-js"
+            src="https://checkout.razorpay.com/v1/checkout.js"
+          />
         </body>
       </html >
     </ClerkProvider>

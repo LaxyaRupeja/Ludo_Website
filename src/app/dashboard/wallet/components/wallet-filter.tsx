@@ -4,15 +4,15 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GamepadIcon, GlobeIcon } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 
-export default function GameFilter() {
+const WalletFilter = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [filter, setFilter] = useState(searchParams?.get("filter") || "your");
+    const [filter, setFilter] = useState(searchParams?.get("filter") || "transactions");
 
     useEffect(() => {
-        router.push(`/dashboard?filter=${filter}`);
+        router.push(`/dashboard/wallet?filter=${filter}`);
     }, [filter, router]);
 
     return (
@@ -20,24 +20,24 @@ export default function GameFilter() {
             <CardContent className="p-3">
                 <div className="flex gap-2">
                     <FilterButton
-                        active={filter === "your"}
-                        onClick={() => setFilter("your")}
-                        icon={<GamepadIcon className="w-4 h-4" />}
+                        active={filter === "transactions"}
+                        onClick={() => setFilter("transactions")}
+                        icon={<ArrowUpIcon className="w-4 h-4" />}
                     >
-                        Your Games
+                        Transactions
                     </FilterButton>
                     <FilterButton
-                        active={filter === "all"}
-                        onClick={() => setFilter("all")}
-                        icon={<GlobeIcon className="w-4 h-4" />}
+                        active={filter === "withdrawals"}
+                        onClick={() => setFilter("withdrawals")}
+                        icon={<ArrowDownIcon className="w-4 h-4" />}
                     >
-                        All Games
+                        Withdrawals
                     </FilterButton>
                 </div>
             </CardContent>
         </Card>
     );
-}
+};
 
 const FilterButton = ({ active, onClick, children, icon }: { active: boolean, onClick: () => void, children: React.ReactNode, icon: React.ReactNode }) => (
     <Button
@@ -55,3 +55,5 @@ const FilterButton = ({ active, onClick, children, icon }: { active: boolean, on
         </span>
     </Button>
 );
+
+export default WalletFilter;
