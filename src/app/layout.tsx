@@ -37,7 +37,7 @@ export default function RootLayout({
       {
         baseTheme: dark
       }
-    }>
+    } afterSignOutUrl="/" >
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}

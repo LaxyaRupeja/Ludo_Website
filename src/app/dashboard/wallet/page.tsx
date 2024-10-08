@@ -9,6 +9,20 @@ import { format } from "date-fns";
 import { Clock, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import WalletFilter from "./components/wallet-filter";
 import { Badge } from "@/components/ui/badge";
+import { Suspense } from "react";
+import Loading from "./loading";
+
+const Page = ({
+  searchParams
+}: {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}) => {
+  return <Suspense fallback={<Loading />}>
+    <WalletPage searchParams={searchParams} />
+  </Suspense>
+}
 
 const WalletPage = async ({
     searchParams
@@ -89,7 +103,8 @@ const WalletPage = async ({
   );
 };
 
-export default WalletPage;
+
+
 
 const TransactionCard = ({ transaction }: { transaction: Transaction }) => {
   const isDebit = transaction.type === "DEBIT";
@@ -182,3 +197,5 @@ const WithdrawRequestCard = ({ request }: { request: WithdrawalRequest }) => {
     </div>
   );
 };
+
+export default Page;

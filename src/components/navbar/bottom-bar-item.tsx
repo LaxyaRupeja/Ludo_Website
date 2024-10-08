@@ -14,7 +14,7 @@ export const BottomBarItem = ({ href, icon: Icon, label }: BottomBarItemProps) =
     const pathname = usePathname();
 
     return (
-        <Link href={href} className="flex flex-col items-center justify-center w-16 sm:w-20 h-full group">
+        <Link  href={href} className="flex flex-col items-center justify-center w-16 sm:w-20 h-full group">
             <div className={cn(
                 "flex flex-col items-center justify-center rounded-lg p-2",
                 "transition-all duration-300 ease-in-out",
