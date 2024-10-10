@@ -11,6 +11,7 @@ import WalletFilter from "./components/wallet-filter";
 import { Badge } from "@/components/ui/badge";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { cn } from "@/lib/utils";
 
 const Page = ({
   searchParams
@@ -42,12 +43,15 @@ const WalletPage = async ({
   const wallet = await prisma.wallet.findUnique({
     where: {
       userId: dbUser?.id,
-    },
+    }
   });
 
   const transactions = await prisma.transaction.findMany({
     where: {
       userId: dbUser?.id,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
@@ -55,23 +59,27 @@ const WalletPage = async ({
     where: {
       userId: dbUser?.id,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return (
-    <div>
+    <div className="">
       <Card className="bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg my-4">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <WalletIcon size={40} className="text-green-400" />
+        <CardContent className="p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row items-center sm:justify-between">
+            <div className="flex items-center space-x-4 mb-4 sm:mb-0">
+              <WalletIcon size={32} className="text-green-400" />
               <div>
-                <h2 className="text-2xl font-bold">Your Wallet</h2>
-                <p className="text-sm text-gray-400">Current Balance</p>
+                <h2 className="text-xl sm:text-2xl font-bold">Your Wallet</h2>
+                <p className="text-xs sm:text-sm text-gray-400">Current Balance</p>
               </div>
             </div>
+            {/* <Separator className="bg-white/90"/> */}
             <div className="flex items-center">
-              <IndianRupee size={30} className="text-green-400 mr-2" />
-              <span className="text-4xl font-bold">{wallet?.balance.toFixed(2)}</span>
+              <IndianRupee size={24} className="text-green-400 mr-2" />
+              <span className="text-3xl sm:text-4xl font-bold">{wallet?.balance.toFixed(2)}</span>
             </div>
           </div>
         </CardContent>
@@ -111,28 +119,28 @@ const TransactionCard = ({ transaction }: { transaction: Transaction }) => {
 
   return (
     <Card className="bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg my-4">
-      <CardContent className="p-6">
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-sm text-gray-400">Transaction ID: {transaction.id}</span>
-          <Badge variant={isDebit ? "destructive" : "default"} className="text-xs">
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
+          <span className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-0">Transaction ID: {transaction.id}</span>
+          <Badge variant={isDebit ? "destructive" : "default"} className="text-xs self-start sm:self-auto">
             {isDebit ? "Debit" : "Credit"}
           </Badge>
         </div>
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center">
-            <IndianRupee className="w-6 h-6 text-green-400 mr-2" />
-            <span className="text-2xl font-bold">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
+          <div className="flex items-center mb-2 sm:mb-0">
+            <IndianRupee className="w-5 h-5 sm:w-6 sm:h-6 text-green-400 mr-2" />
+            <span className="text-xl sm:text-2xl font-bold">
               {Math.abs(transaction.amount)}
             </span>
           </div>
           <div className="flex items-center text-gray-400">
             <Clock className="w-4 h-4 mr-2" />
-            <span className="text-sm">
+            <span className="text-xs sm:text-sm">
               {format(new Date(transaction.createdAt), "MMM d, yyyy HH:mm")}
             </span>
           </div>
         </div>
-        <p className="text-sm text-gray-400 mt-2">
+        <p className="text-xs sm:text-sm text-gray-400 mt-2">
           {isDebit ? "Debited from" : "Credited to"} your wallet
         </p>
       </CardContent>
@@ -168,28 +176,28 @@ const WithdrawRequestCard = ({ request }: { request: WithdrawalRequest }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 shadow-lg my-4 text-white">
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-sm text-gray-400">Request ID: {request.id}</span>
-        <div className={`flex items-center ${getStatusColor(request.status)}`}>
+    <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-4 sm:p-6 shadow-lg my-4 text-white">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
+        <span className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-0">Request ID: {request.id}</span>
+        <div className={cn("flex items-center", getStatusColor(request.status))}>
           {getStatusIcon(request.status)}
-          <span className="ml-2 font-semibold">{request.status}</span>
+          <span className="ml-2 text-sm font-semibold">{request.status}</span>
         </div>
       </div>
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center">
-          <IndianRupee className="w-6 h-6 text-green-400 mr-2" />
-          <span className="text-2xl font-bold">{request.amount}</span>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
+        <div className="flex items-center mb-2 sm:mb-0">
+          <IndianRupee className="w-5 h-5 sm:w-6 sm:h-6 text-green-400 mr-2" />
+          <span className="text-xl sm:text-2xl font-bold">{request.amount}</span>
         </div>
         <div className="flex items-center text-gray-400">
           <Clock className="w-4 h-4 mr-2" />
-          <span className="text-sm">
+          <span className="text-xs sm:text-sm">
             {format(new Date(request.createdAt), "MMM d, yyyy HH:mm")}
           </span>
         </div>
       </div>
       {request.status === "PENDING" && (
-        <p className="text-sm text-gray-400 mt-2">
+        <p className="text-xs sm:text-sm text-gray-400 mt-2">
           Your withdrawal request is being processed. This may take up to 24
           hours.
         </p>

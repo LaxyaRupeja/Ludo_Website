@@ -28,6 +28,7 @@ model User {
   wonGames          Game[]              @relation("WonGames")
   walletId          String? // Make sure this is optional
   WithdrawalRequest WithdrawalRequest[]
+  Proof             Proof[]
 }
 
 model Wallet {
@@ -62,6 +63,7 @@ model Game {
   creator   User       @relation("CreatedGames", fields: [creatorId], references: [id])
   joiner    User?      @relation("JoinedGames", fields: [joinerId], references: [id])
   winner    User?      @relation("WonGames", fields: [winnerId], references: [id])
+  Proof     Proof[]
 }
 
 model WithdrawalRequest {
@@ -74,12 +76,32 @@ model WithdrawalRequest {
   user      User             @relation(fields: [userId], references: [id])
 }
 
+model Proof {
+  id        String      @id @default(cuid())
+  userId    String
+  gameId    String
+  proof     String
+  status    ProofStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      User        @relation(fields: [userId], references: [id])
+  game      Game        @relation(fields: [gameId], references: [id])
+}
+
+enum ProofStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 enum GameStatus {
   PENDING
   ACTIVE
   EXPIRED
+  WAITING_FOR_VERIFICATION
   COMPLETED
   CANCELED
+  DISPUTED
 }
 
 enum TransactionType {

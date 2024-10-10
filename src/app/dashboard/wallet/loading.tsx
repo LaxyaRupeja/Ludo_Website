@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Loading() {
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-6">
         <Skeleton className="h-12 w-full" />{" "}
         {/* Increased top bar height and full width */}
       </div>

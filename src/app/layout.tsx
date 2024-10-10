@@ -46,7 +46,6 @@ export default function RootLayout({
             attribute="class"
             defaultTheme="system"
             forcedTheme="dark"
-            enableSystem
             disableTransitionOnChange
           >
             <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
