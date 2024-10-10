@@ -268,7 +268,7 @@ export const submitProof = async (gameId: string, proof: string) => {
     
 
     // Create a new proof
-    const newProof = await prisma.proof.create({
+    await prisma.proof.create({
       data: {
         gameId: game.id,
         userId: dbUser.id,
