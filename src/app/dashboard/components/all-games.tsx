@@ -7,7 +7,7 @@ const AllGames = async () => {
 
     const {
         userId
-    } = auth();
+    } = await auth();
 
     if (!userId) {
         redirect("/sign-in")

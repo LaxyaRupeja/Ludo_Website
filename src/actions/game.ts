@@ -10,6 +10,7 @@ export const createGame = async (data: TCreateGame) => {
   console.log("Creating Game", data);
 
   const gameData = createGameSchema.safeParse(data);
+  
 
   if (!gameData.success) {
     const errors = gameData.error.issues.map((issue) => ({
@@ -25,7 +26,7 @@ export const createGame = async (data: TCreateGame) => {
 
   const { betAmount, code } = gameData.data;
 
-  const user = auth();
+  const user = await auth();
 
   if (!user.userId) {
     return {
@@ -99,7 +100,7 @@ export const createGame = async (data: TCreateGame) => {
 // Join a Game
 
 export const joinGame = async (gameId: string) => {
-  const user = auth();
+  const user = await auth();
 
   if (!user.userId) {
     return {
@@ -194,7 +195,7 @@ export const joinGame = async (gameId: string) => {
 export const submitProof = async (gameId: string, proof: string) => {
   console.log("testing submit proof", gameId, proof);
   try {
-    const user = auth();
+    const user = await auth();
 
     if (!user.userId) {
       return {

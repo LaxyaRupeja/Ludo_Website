@@ -59,7 +59,7 @@ export const GameCard = (
                 </div>
             </div>
 
-            {isGameActive && isGameFull && (
+            {isJoiner && isCreator && (
                 <>
                     <Separator className="my-4 bg-gray-700" />
                     <div className="flex items-center justify-center bg-gray-700 rounded-lg p-4">

@@ -35,23 +35,28 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={
       {
-        baseTheme: dark
+        layout: {
+          unsafe_disableDevelopmentModeWarnings: true,
+        },
+        baseTheme:dark  
       }
-    } afterSignOutUrl="/" >
+      
+      
+    } afterSignOutUrl="/"  >
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <ThemeProvider
+          {/* <ThemeProvider
             attribute="class"
             defaultTheme="system"
             forcedTheme="dark"
             disableTransitionOnChange
-          >
+          > */}
             <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
               <div className="h-full rounded-md">
                 <Navbar />
-                <div>
+                <div className="bg-gray-900 mt-10">
                   {
                     children
                   }
@@ -60,7 +65,7 @@ export default function RootLayout({
               </div>
               <Toaster position="top-right" />
             </main>
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
           <Script
             id="razorpay-checkout-js"
             src="https://checkout.razorpay.com/v1/checkout.js"

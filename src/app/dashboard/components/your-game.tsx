@@ -7,7 +7,7 @@ import { SubmitProofModal } from "./submit-proof-modal";
 import { IndianRupee, Users, Clock, Code, CheckCircle } from "lucide-react";
 
 const YourGames = async () => {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     redirect("/sign-in");
@@ -79,18 +79,19 @@ const GameCard = async ({ game, userId }: { game: Game; userId: string }) => {
         <h3 className="text-xl md:text-2xl font-bold">
           Game #{game.id.split("-")[0]}
         </h3>
-        {isGameActive && isGameYours && !isProofSubmitted && (
-          <SubmitProofModal game={game} />
+        {isGameActive && isGameYours && !isProofSubmitted && <SubmitProofModal game={game} />}
+        {!isProofSubmitted && game.status == "WAITING_FOR_VERIFICATION" && (
+          <div className="flex items-center gap-2 bg-gradient-to-br text-xs from-green-500 to-blue-300 rounded-lg p-3 px-5">
+            <span className="text-white">Waiting for verification</span>
+          </div>
         )}
-        {
-            isGameActive && isGameYours && isProofSubmitted && (
-                <div className="flex items-center gap-2 bg-gradient-to-br from-green-500 to-blue-300 rounded-lg p-2 px-4">
-                    <span className="text-white">Proof Submitted</span>
-                    <CheckCircle className="w-6 h-6 text-white" />
-                </div>
-            )
-        }
+        {isProofSubmitted && (
+          <div className="flex items-center gap-2 bg-gradient-to-br text-xs from-green-500 to-blue-300 rounded-lg p-3 px-5">
+            <span className="text-white">Proof Submitted</span>
+          </div>
+        )}
       </div>
+
 
       <Separator className="my-4 bg-gray-700" />
 
@@ -127,7 +128,7 @@ const GameCard = async ({ game, userId }: { game: Game; userId: string }) => {
         </div>
       </div>
 
-      {isGameActive && isGameFull && !isProofSubmitted && (
+      {isGameYours && (
         <>
           <Separator className="my-4 bg-gray-700" />
           <div className="flex items-center justify-center bg-gray-700 rounded-lg p-4">

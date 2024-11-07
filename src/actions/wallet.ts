@@ -12,7 +12,7 @@ export const verifyPayment = async (paymentId: string) => {
       key_secret: process.env.RAZORPAY_KEY_SECRET!,
     });
 
-    const user = auth();
+    const user = await auth();
 
     if (!user.userId) {
       return {
@@ -86,7 +86,7 @@ export const verifyPayment = async (paymentId: string) => {
 };
 
 export const withdrawMoney = async (amount: number) => {
-  const user = auth();
+  const user = await auth();
 
   console.log({ amount });
 

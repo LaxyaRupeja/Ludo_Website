@@ -13,13 +13,14 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import { cn } from "@/lib/utils";
 
-const Page = ({
-  searchParams
-}: {
-  searchParams: {
-    [key: string]: string | string[] | undefined
+const Page = async (
+  props: {
+    searchParams: Promise<{
+      [key: string]: string | string[] | undefined
+    }>
   }
-}) => {
+) => {
+  const searchParams = await props.searchParams;
   return <Suspense fallback={<Loading />}>
     <WalletPage searchParams={searchParams} />
   </Suspense>
@@ -36,7 +37,7 @@ const WalletPage = async ({
 
   const dbUser = await prisma.user.findUnique({
     where: {
-      clerkId: user?.id,
+      clerkId: user?.id ?? "",
     },
   });
 

@@ -5,7 +5,7 @@ import { Dices, Users, Trophy, Zap } from "lucide-react";
 
 export default async function Home() {
   return (
-    <div className="flex flex-col min-h-screen text-white mt-20">
+    <div className="flex flex-col min-h-screen text-white  bg-gray-900">
       <main className="container mx-auto px-4 py-16 flex-grow">
         <div className="flex flex-col md:flex-row items-center justify-between mb-16">
           <div className="md:w-1/2 mb-8 md:mb-0">
