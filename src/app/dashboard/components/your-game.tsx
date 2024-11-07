@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { Game } from "@prisma/client";
 import { SubmitProofModal } from "./submit-proof-modal";
-import { IndianRupee, Users, Clock, Code, CheckCircle } from "lucide-react";
+import { IndianRupee, Users, Clock, Code } from "lucide-react";
 
 const YourGames = async () => {
   const { userId } = await auth();

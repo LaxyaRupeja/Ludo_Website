@@ -16,7 +16,7 @@ export const GameCard = (
     const isCreator = game.creatorId === userId;
     const isJoiner = game.joinerId === userId;
     const isGameFull = game.joinerId !== null;
-    const isGameActive = game.status === "ACTIVE";
+    // const isGameActive = game.status === "ACTIVE";
 
     return (
         <div key={game.id} className="bg-gradient-to-br from-gray-800 to-gray-900 text-white rounded-lg p-6 shadow-lg">
